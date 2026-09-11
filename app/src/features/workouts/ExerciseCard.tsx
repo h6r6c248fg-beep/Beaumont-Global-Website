@@ -52,7 +52,7 @@ function SetRow({
   return (
     <div
       className={cx(
-        'grid grid-cols-[1.75rem_1fr_1fr_2.5rem_2.25rem_2.25rem_2.25rem] items-center gap-1.5 rounded-lg px-1.5 py-1 transition-colors sm:gap-2',
+        'grid grid-cols-[1.75rem_1fr_1fr_2.5rem_2.5rem_2.5rem_2.5rem] items-center gap-1.5 rounded-lg px-1.5 py-1 transition-colors sm:gap-2',
         set.completed && 'bg-[var(--color-emerald)]/[0.06]'
       )}
     >
@@ -102,7 +102,7 @@ function SetRow({
         onClick={() => onUpdate({ is_warmup: !set.is_warmup })}
         title="Toggle warmup"
         className={cx(
-          'flex h-9 w-9 items-center justify-center rounded-lg border transition-colors',
+          'flex h-10 w-10 items-center justify-center rounded-lg border transition-colors',
           set.is_warmup
             ? 'border-[var(--color-amber)]/40 bg-[var(--color-amber)]/12 text-[var(--color-amber)]'
             : 'border-[var(--color-line)] text-[var(--color-mist-2)] hover:text-[var(--color-mist)]'
@@ -115,7 +115,7 @@ function SetRow({
         onClick={toggleComplete}
         title="Mark set complete"
         className={cx(
-          'flex h-9 w-9 items-center justify-center rounded-lg border transition-colors',
+          'flex h-10 w-10 items-center justify-center rounded-lg border transition-colors',
           set.completed
             ? 'border-[var(--color-emerald)]/40 bg-[var(--color-emerald)]/15 text-[var(--color-emerald)]'
             : 'border-[var(--color-line)] text-[var(--color-mist-2)] hover:border-[var(--color-emerald)]/40 hover:text-[var(--color-emerald)]'
@@ -127,7 +127,7 @@ function SetRow({
       <button
         onClick={onDelete}
         title="Delete set"
-        className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--color-mist-2)] transition-colors hover:bg-[var(--color-rose)]/10 hover:text-[var(--color-rose)]"
+        className="flex h-10 w-10 items-center justify-center rounded-lg text-[var(--color-mist-2)] transition-colors hover:bg-[var(--color-rose)]/10 hover:text-[var(--color-rose)]"
       >
         <Trash2 className="h-4 w-4" />
       </button>
@@ -203,7 +203,7 @@ export function ExerciseCard({
       </PanelHeader>
       <PanelBody className="space-y-1">
         {sets.length > 0 && (
-          <div className="grid grid-cols-[1.75rem_1fr_1fr_2.5rem_2.25rem_2.25rem_2.25rem] gap-1.5 px-1.5 text-[10px] uppercase tracking-wide text-[var(--color-mist-2)] sm:gap-2">
+          <div className="grid grid-cols-[1.75rem_1fr_1fr_2.5rem_2.5rem_2.5rem_2.5rem] gap-1.5 px-1.5 text-[10px] uppercase tracking-wide text-[var(--color-mist-2)] sm:gap-2">
             <span>Set</span>
             <span className="text-center">kg</span>
             <span className="text-center">Reps</span>
