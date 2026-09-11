@@ -98,7 +98,11 @@ export function CyclesPage() {
       {topTab === 'cycles' ? (
         <div className="space-y-5 animate-fade-up">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <Tabs tabs={STATUS_TABS} value={statusTab} onChange={(v) => setStatusTab(v as CycleStatus)} />
+            <Tabs
+              tabs={STATUS_TABS.map((t) => ({ ...t, label: counts.get(t.value) ? `${t.label} (${counts.get(t.value)})` : t.label }))}
+              value={statusTab}
+              onChange={(v) => setStatusTab(v as CycleStatus)}
+            />
             <Button variant="primary" size="sm" onClick={() => setNewCycleOpen(true)}>
               <Plus className="h-3.5 w-3.5" /> New cycle
             </Button>
