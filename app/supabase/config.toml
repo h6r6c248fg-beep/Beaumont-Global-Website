@@ -1,0 +1,22 @@
+# Supabase CLI config for Meridian's Edge Functions.
+#
+# The OAuth "authorize"/"callback" endpoints below are hit by a plain
+# browser navigation (redirects), so there's no Supabase Authorization
+# header on that request — with the platform's default JWT verification
+# on, the gateway would 401 before our function code ever runs. Turn it
+# off for just those two functions; every other function (calendar-caldav-
+# sync, email-imap-sync, ai-assistant) is called from the app via
+# `fetch`/`supabase.functions.invoke`, which does attach the user's
+# session token, so they keep the default `verify_jwt = true`.
+
+[functions.calendar-google-oauth]
+verify_jwt = false
+
+[functions.calendar-microsoft-oauth]
+verify_jwt = false
+
+[functions.email-google-oauth]
+verify_jwt = false
+
+[functions.email-microsoft-oauth]
+verify_jwt = false

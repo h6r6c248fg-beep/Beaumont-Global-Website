@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Iowan Old Style", ui-serif, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-ink: #08090c;
+  --color-obsidian: #0d0f14;
+  --color-obsidian-2: #121520;
+  --color-obsidian-3: #171b28;
+  --color-panel: #14171f;
+  --color-panel-2: #191d27;
+  --color-line: #262b3a;
+  --color-line-soft: #1c2029;
+
+  --color-mist: #9aa1b4;
+  --color-mist-2: #6c7284;
+  --color-paper: #f1efe9;
+  --color-paper-dim: #cfcdc6;
+
+  --color-gold: #cba15c;
+  --color-gold-bright: #e4bf7f;
+  --color-gold-dim: #8a734a;
+  --color-bronze: #b0794f;
+
+  --color-emerald: #59b895;
+  --color-rose: #d97a7a;
+  --color-azure: #6fa4d9;
+  --color-amber: #d9a55b;
+
+  --shadow-luxe: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 60px -20px rgba(0,0,0,0.7);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: rgba(203, 161, 92, 0.28);
+    color: var(--color-paper);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 999px;
+    border: 2px solid var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold-dim);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-luxe);
+  }
+
+  .gold-text {
+    background: linear-gradient(120deg, var(--color-gold-bright), var(--color-gold) 45%, var(--color-bronze));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    background: linear-gradient(90deg, transparent, var(--color-line) 20%, var(--color-line) 80%, transparent);
+    height: 1px;
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
