@@ -181,7 +181,7 @@ function ExerciseDetail({ exerciseId, instructions }: { exerciseId: string; inst
                       fontSize: 12,
                       color: 'var(--color-paper)',
                     }}
-                    formatter={(value: number) => [`${round(value, 1)}kg`, 'Top set']}
+                    formatter={(value) => [`${round(Number(value), 1)}kg`, 'Top set']}
                   />
                   <Line type="monotone" dataKey="weight" stroke="var(--color-gold)" strokeWidth={2} dot={{ r: 3, fill: 'var(--color-gold)' }} />
                 </LineChart>
