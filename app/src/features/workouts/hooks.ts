@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/features/auth/AuthProvider'
-import type { Exercise, WorkoutSet } from '@/types/database'
+import type { Exercise, RoutineExercise, WorkoutSession, WorkoutSet } from '@/types/database'
 
 /** Invalidates every workouts query. Simple and correct at this app's scale. */
 function useInvalidateWorkouts() {
@@ -111,6 +111,54 @@ export function useDeleteExerciseFromSession() {
     mutationFn: async ({ sessionId, exerciseId }: { sessionId: string; exerciseId: string }) => {
       const { error } = await supabase.from('workout_sets').delete().eq('session_id', sessionId).eq('exercise_id', exerciseId)
       if (error) throw error
+    },
+    onSuccess: () => invalidate(),
+  })
+}
+
+/** All sets belonging to one session, freshest-first insertion order preserved by created_at. */
+export function useSessionSets(sessionId: string | undefined) {
+  const { user } = useAuth()
+  return useQuery({
+    queryKey: ['workouts', 'session-sets', user?.id, sessionId],
+    enabled: !!user && !!sessionId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('workout_sets')
+        .select('*')
+        .eq('session_id', sessionId!)
+        .order('created_at', { ascending: true })
+      if (error) throw error
+      return (data ?? []) as WorkoutSet[]
+    },
+  })
+}
+
+/** Target sets/reps/weight per exercise for a routine, keyed by exercise_id. */
+export function useRoutineTargets(routineId: string | null | undefined) {
+  const { user } = useAuth()
+  return useQuery({
+    queryKey: ['workouts', 'routine-targets', user?.id, routineId],
+    enabled: !!user && !!routineId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('routine_exercises')
+        .select('*')
+        .eq('routine_id', routineId!)
+        .order('order_index', { ascending: true })
+      if (error) throw error
+      return (data ?? []) as RoutineExercise[]
+    },
+  })
+}
+
+export function useUpdateSession() {
+  const invalidate = useInvalidateWorkouts()
+  return useMutation({
+    mutationFn: async ({ id, patch }: { id: string; patch: Partial<WorkoutSession> }) => {
+      const { data, error } = await supabase.from('workout_sessions').update(patch).eq('id', id).select('*').single()
+      if (error) throw error
+      return data as WorkoutSession
     },
     onSuccess: () => invalidate(),
   })
