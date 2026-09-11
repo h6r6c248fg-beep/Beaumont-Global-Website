@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/features/auth/AuthProvider'
-import type { Exercise, RoutineExercise, WorkoutSession, WorkoutSet } from '@/types/database'
+import type { Exercise, Routine, RoutineExercise, WorkoutSession, WorkoutSet } from '@/types/database'
 
 /** Invalidates every workouts query. Simple and correct at this app's scale. */
 function useInvalidateWorkouts() {
@@ -148,6 +148,44 @@ export function useRoutineTargets(routineId: string | null | undefined) {
         .order('order_index', { ascending: true })
       if (error) throw error
       return (data ?? []) as RoutineExercise[]
+    },
+  })
+}
+
+export function useRoutines() {
+  const { user } = useAuth()
+  return useQuery({
+    queryKey: ['workouts', 'routines', user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('routines')
+        .select('*')
+        .eq('user_id', user!.id)
+        .order('created_at', { ascending: false })
+      if (error) throw error
+      return (data ?? []) as Routine[]
+    },
+  })
+}
+
+/** The user's currently in-progress session (ended_at is null), if any. */
+export function useActiveSession() {
+  const { user } = useAuth()
+  return useQuery({
+    queryKey: ['workouts', 'active-session', user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('workout_sessions')
+        .select('*')
+        .eq('user_id', user!.id)
+        .is('ended_at', null)
+        .order('started_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+      if (error) throw error
+      return data as WorkoutSession | null
     },
   })
 }
