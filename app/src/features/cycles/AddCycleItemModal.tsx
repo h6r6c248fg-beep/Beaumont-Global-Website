@@ -5,8 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { Modal } from '@/components/ui/Modal'
 import { Button } from '@/components/ui/Button'
-import { Field, Input, Select, Textarea, Label } from '@/components/ui/Input'
-import { cx } from '@/lib/utils'
+import { Field, Input, Select, Textarea } from '@/components/ui/Input'
 import { FREQUENCY_PRESETS } from './utils'
 import type { AdministrationRoute, Compound, CompoundCategory, CycleItem } from '@/types/database'
 
@@ -64,10 +63,10 @@ export function AddCycleItemModal({
   const [doseAmount, setDoseAmount] = useState(editingItem ? String(editingItem.dose_amount) : '')
   const [doseUnit, setDoseUnit] = useState(editingItem?.dose_unit ?? 'mg')
   const [frequencyPreset, setFrequencyPreset] = useState<string>(
-    editingItem && !FREQUENCY_PRESETS.includes(editingItem.frequency as any) ? 'Custom' : editingItem?.frequency ?? 'EOD'
+    editingItem && !(FREQUENCY_PRESETS as readonly string[]).includes(editingItem.frequency) ? 'Custom' : editingItem?.frequency ?? 'EOD'
   )
   const [frequencyCustom, setFrequencyCustom] = useState(
-    editingItem && !FREQUENCY_PRESETS.includes(editingItem.frequency as any) ? editingItem.frequency : ''
+    editingItem && !(FREQUENCY_PRESETS as readonly string[]).includes(editingItem.frequency) ? editingItem.frequency : ''
   )
   const [route, setRoute] = useState<AdministrationRoute>(editingItem?.route ?? 'im')
   const [startDate, setStartDate] = useState(editingItem?.start_date ?? new Date().toISOString().slice(0, 10))
@@ -87,7 +86,7 @@ export function AddCycleItemModal({
     setCompoundName(editingItem?.compound_name ?? '')
     setDoseAmount(editingItem ? String(editingItem.dose_amount) : '')
     setDoseUnit(editingItem?.dose_unit ?? 'mg')
-    const preset = editingItem && !FREQUENCY_PRESETS.includes(editingItem.frequency as any) ? 'Custom' : editingItem?.frequency ?? 'EOD'
+    const preset = editingItem && !(FREQUENCY_PRESETS as readonly string[]).includes(editingItem.frequency) ? 'Custom' : editingItem?.frequency ?? 'EOD'
     setFrequencyPreset(preset)
     setFrequencyCustom(preset === 'Custom' ? editingItem?.frequency ?? '' : '')
     setRoute(editingItem?.route ?? 'im')
@@ -409,7 +408,3 @@ export function AddCycleItemModal({
     </Modal>
   )
 }
-
-// silence unused-import in case Label ends up unused across edits
-void Label
-void cx

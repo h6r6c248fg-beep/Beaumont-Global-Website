@@ -164,7 +164,7 @@ export function WeightPanel({ userId }: { userId: string }) {
                         color: 'var(--color-paper)',
                       }}
                       labelStyle={{ color: 'var(--color-mist)' }}
-                      formatter={(value: number) => [`${value} kg`, 'Weight']}
+                      formatter={(value) => [`${value} kg`, 'Weight']}
                     />
                     <Line
                       type="monotone"

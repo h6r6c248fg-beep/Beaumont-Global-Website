@@ -1,5 +1,28 @@
 import { differenceInCalendarDays } from 'date-fns'
-import type { DoseLog } from '@/types/database'
+import type { AdministrationRoute, CycleStatus, DoseLog } from '@/types/database'
+
+export const ROUTE_LABELS: Record<AdministrationRoute, string> = {
+  im: 'IM',
+  subq: 'SubQ',
+  oral: 'Oral',
+  topical: 'Topical',
+  nasal: 'Nasal',
+  other: 'Other',
+}
+
+export const STATUS_LABELS: Record<CycleStatus, string> = {
+  planned: 'Planned',
+  active: 'Active',
+  completed: 'Completed',
+  discontinued: 'Discontinued',
+}
+
+export const STATUS_TONES: Record<CycleStatus, 'gold' | 'emerald' | 'rose' | 'azure' | 'amber' | 'neutral'> = {
+  planned: 'azure',
+  active: 'emerald',
+  completed: 'gold',
+  discontinued: 'rose',
+}
 
 // Preset dosing frequencies mapped to their interval in days. Anything not in
 // this map (including free-text "Custom" entries) has no computable
