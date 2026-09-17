@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Fraunces", "Iowan Old Style", ui-serif, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* System font stack — on iOS/macOS this resolves to San Francisco, so
+     headings and body text read as genuinely native rather than a web
+     font standing in for one. */
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "IBM Plex Mono", monospace;
 
   --color-ink: #08090c;
   --color-obsidian: #0d0f14;
@@ -50,7 +53,8 @@
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    font-weight: 650;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
@@ -77,9 +81,12 @@
 
 @layer components {
   .glass-panel {
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--color-line);
+    /* iOS-style "vibrancy" material: heavier blur + saturation lift, a
+       hairline top highlight, softer border than a flat luxury card. */
+    background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012));
+    backdrop-filter: blur(28px) saturate(1.5);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    border: 1px solid rgba(255,255,255,0.08);
     box-shadow: var(--shadow-luxe);
   }
 

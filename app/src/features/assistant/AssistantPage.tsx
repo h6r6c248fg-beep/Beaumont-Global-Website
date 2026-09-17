@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
-import { Sparkles, Plus, Trash2, Send, Bot, User as UserIcon, AlertCircle } from 'lucide-react'
+import { Sparkles, Plus, Trash2, Send, Bot, User as UserIcon, AlertCircle, Mic, Volume2, VolumeX } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { Button } from '@/components/ui/Button'
 import { Textarea } from '@/components/ui/Input'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { cx } from '@/lib/utils'
+import { voiceInputSupport, requestVoiceInputPermission, startListening, speak, stopSpeaking } from '@/lib/voice'
 import type { AiConversation, AiMessage } from '@/types/database'
+
+const SPEAK_REPLIES_KEY = 'meridian_assistant_speak_replies'
 
 const SUGGESTED_PROMPTS = [
   'What does my day look like?',
@@ -30,6 +33,28 @@ export function AssistantPage() {
   const [sendError, setSendError] = useState<string | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const [listening, setListening] = useState(false)
+  const [speakReplies, setSpeakReplies] = useState(() => {
+    try {
+      return localStorage.getItem(SPEAK_REPLIES_KEY) === '1'
+    } catch {
+      return false
+    }
+  })
+  const stopListeningRef = useRef<(() => void) | null>(null)
+  const voiceSupport = useMemo(() => voiceInputSupport(), [])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(SPEAK_REPLIES_KEY, speakReplies ? '1' : '0')
+    } catch {
+      // ignore — private-browsing/storage-blocked contexts just won't persist the preference
+    }
+    if (!speakReplies) stopSpeaking()
+  }, [speakReplies])
+
+  useEffect(() => () => stopListeningRef.current?.(), [])
 
   const conversations = useQuery({
     queryKey: ['assistant', 'conversations', userId],
@@ -141,6 +166,7 @@ export function AssistantPage() {
         .from('ai_messages')
         .insert({ conversation_id: conversationId, user_id: userId, role: 'assistant', content: fnData.reply })
       if (assistantMsgError) throw assistantMsgError
+      if (speakReplies) speak(fnData.reply)
 
       await supabase.from('ai_conversations').update({ updated_at: new Date().toISOString() }).eq('id', conversationId)
 
@@ -159,6 +185,40 @@ export function AssistantPage() {
       e.preventDefault()
       void handleSend()
     }
+  }
+
+  async function handleMicToggle() {
+    if (listening) {
+      stopListeningRef.current?.()
+      stopListeningRef.current = null
+      setListening(false)
+      return
+    }
+
+    setSendError(null)
+    const granted = await requestVoiceInputPermission()
+    if (!granted) {
+      setSendError('Microphone or speech recognition permission was denied.')
+      return
+    }
+
+    setListening(true)
+    stopListeningRef.current = startListening(
+      (text, isFinal) => {
+        setDraft(text)
+        if (isFinal) {
+          stopListeningRef.current?.()
+          stopListeningRef.current = null
+          setListening(false)
+          if (text.trim()) void handleSend(text)
+        }
+      },
+      (message) => {
+        setSendError(message)
+        stopListeningRef.current = null
+        setListening(false)
+      }
+    )
   }
 
   const currentMessages = useMemo(() => messages.data ?? [], [messages.data])
@@ -224,9 +284,19 @@ export function AssistantPage() {
       <div className="glass-panel flex min-w-0 flex-1 flex-col rounded-2xl">
         <div className="flex items-center gap-2 border-b border-[var(--color-line-soft)] px-5 py-4">
           <Sparkles className="h-4 w-4 text-[var(--color-gold)]" />
-          <h1 className="font-display text-base font-medium text-[var(--color-paper)]">
+          <h1 className="flex-1 font-display text-base font-medium text-[var(--color-paper)]">
             {selectedId ? (conversations.data ?? []).find((c) => c.id === selectedId)?.title || 'Conversation' : 'Ask Meridian'}
           </h1>
+          <button
+            onClick={() => setSpeakReplies((v) => !v)}
+            title={speakReplies ? 'Replies are spoken aloud — tap to mute' : 'Tap to have replies spoken aloud'}
+            className={cx(
+              'rounded-lg p-1.5 transition-colors',
+              speakReplies ? 'text-[var(--color-gold-bright)]' : 'text-[var(--color-mist-2)] hover:text-[var(--color-mist)]'
+            )}
+          >
+            {speakReplies ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+          </button>
         </div>
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4">
@@ -301,12 +371,24 @@ export function AssistantPage() {
         )}
 
         <div className="flex items-end gap-2 p-4">
+          {voiceSupport !== 'none' && (
+            <Button
+              variant={listening ? 'primary' : 'secondary'}
+              size="icon"
+              disabled={sending}
+              onClick={() => void handleMicToggle()}
+              title={listening ? 'Listening — tap to stop' : 'Talk to your assistant'}
+              className={listening ? 'animate-pulse' : undefined}
+            >
+              <Mic className="h-4 w-4" />
+            </Button>
+          )}
           <Textarea
             ref={textareaRef}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask about your day, macros, training, cycles or finances…"
+            placeholder={listening ? 'Listening…' : 'Ask about your day, macros, training, cycles or finances…'}
             disabled={sending}
             rows={1}
             className="max-h-[200px] flex-1"

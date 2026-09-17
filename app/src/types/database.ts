@@ -11,6 +11,8 @@ export type CycleStatus = 'planned' | 'active' | 'completed' | 'discontinued'
 export type AdministrationRoute = 'im' | 'subq' | 'oral' | 'topical' | 'nasal' | 'other'
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 export type IntegrationProvider = 'orgview' | 'traderpro'
+export type TaskPriority = 'low' | 'medium' | 'high'
+export type FuelType = 'petrol' | 'diesel' | 'electric' | 'hybrid' | 'other'
 
 export interface Profile {
   id: string
@@ -19,8 +21,46 @@ export interface Profile {
   timezone: string
   theme: string
   onboarded_at: string | null
+  home_latitude: number | null
+  home_longitude: number | null
+  home_city: string | null
   created_at: string
   updated_at: string
+}
+
+export interface Task {
+  id: string
+  user_id: string
+  title: string
+  notes: string | null
+  list_name: string
+  priority: TaskPriority
+  due_at: string | null
+  completed: boolean
+  completed_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface Vehicle {
+  id: string
+  user_id: string
+  name: string
+  make: string | null
+  model: string | null
+  year: number | null
+  color: string | null
+  license_plate: string | null
+  fuel_type: FuelType
+  fuel_level_pct: number | null
+  battery_level_pct: number | null
+  odometer_km: number | null
+  range_km: number | null
+  last_service_date: string | null
+  next_service_due: string | null
+  notes: string | null
+  updated_at: string
+  created_at: string
 }
 
 export interface CalendarAccount {
@@ -337,6 +377,8 @@ export interface Database {
       workout_sets: TableDef<WorkoutSet>
       integrations: TableDef<Integration>
       integration_snapshots: TableDef<IntegrationSnapshot>
+      tasks: TableDef<Task>
+      vehicles: TableDef<Vehicle>
     }
     Views: Record<string, never>
     Functions: Record<string, never>
@@ -350,6 +392,8 @@ export interface Database {
       administration_route: AdministrationRoute
       meal_type: MealType
       integration_provider: IntegrationProvider
+      task_priority: TaskPriority
+      fuel_type: FuelType
     }
   }
 }

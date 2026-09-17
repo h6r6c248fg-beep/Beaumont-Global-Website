@@ -24,6 +24,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Meridian uses the microphone so you can talk to your assistant.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Meridian converts your voice to text on-device to send to your assistant.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Meridian uses your location to show today's weather in your morning briefing.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

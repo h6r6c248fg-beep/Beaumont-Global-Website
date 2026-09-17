@@ -2,6 +2,8 @@ import { type ReactNode, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutGrid,
+  CheckSquare,
+  Car,
   CalendarDays,
   Mail,
   Sparkles,
@@ -20,12 +22,14 @@ import { cx, initials } from '@/lib/utils'
 
 const NAV = [
   { to: '/', label: 'Overview', icon: LayoutGrid, end: true },
+  { to: '/tasks', label: 'Tasks', icon: CheckSquare },
   { to: '/calendar', label: 'Calendar', icon: CalendarDays },
   { to: '/email', label: 'Email', icon: Mail },
   { to: '/assistant', label: 'Assistant', icon: Sparkles },
   { to: '/cycles', label: 'Cycles', icon: Syringe },
   { to: '/nutrition', label: 'Nutrition', icon: UtensilsCrossed },
   { to: '/workouts', label: 'Workouts', icon: Dumbbell },
+  { to: '/garage', label: 'Garage', icon: Car },
   { to: '/finance', label: 'Finance', icon: LineChart },
 ]
 

@@ -148,6 +148,55 @@ async function buildSystemPrompt(sb: ReturnType<typeof userClient>): Promise<str
     // best-effort
   }
 
+  // Tasks: overdue + due today, plus a completed-today count.
+  try {
+    const now = new Date()
+    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0)
+    const todayEnd = new Date(now); todayEnd.setHours(23, 59, 59, 999)
+    const [{ data: overdue }, { data: dueToday }, { data: completedToday }] = await Promise.all([
+      sb.from('tasks').select('title, due_at, priority').eq('completed', false).lt('due_at', todayStart.toISOString()).order('due_at', { ascending: true }).limit(15),
+      sb.from('tasks').select('title, due_at, priority').eq('completed', false).gte('due_at', todayStart.toISOString()).lte('due_at', todayEnd.toISOString()).order('due_at', { ascending: true }).limit(15),
+      sb.from('tasks').select('id', { count: 'exact', head: true }).eq('completed', true).gte('completed_at', todayStart.toISOString()),
+    ])
+    const fmt = (t: { title: string; priority: string }) => `- ${t.title} (${t.priority} priority)`
+    const lines: string[] = []
+    if (overdue && overdue.length > 0) lines.push(`Overdue:\n${overdue.map(fmt).join('\n')}`)
+    if (dueToday && dueToday.length > 0) lines.push(`Due today:\n${dueToday.map(fmt).join('\n')}`)
+    if (lines.length === 0) lines.push('Nothing overdue and nothing due today.')
+    lines.push(`Completed today: ${(completedToday as unknown as { count?: number })?.count ?? 0}.`)
+    sections.push(`Tasks:\n${lines.join('\n')}`)
+  } catch {
+    // best-effort
+  }
+
+  // Vehicles: current levels and service status.
+  try {
+    const { data: vehicles } = await sb
+      .from('vehicles')
+      .select('name, fuel_type, fuel_level_pct, battery_level_pct, range_km, next_service_due')
+    if (vehicles && vehicles.length > 0) {
+      const lines = vehicles.map((v: any) => {
+        const bits: string[] = []
+        if (v.fuel_level_pct != null) bits.push(`fuel ${v.fuel_level_pct}%`)
+        if (v.battery_level_pct != null) bits.push(`battery ${v.battery_level_pct}%`)
+        if (v.range_km != null) bits.push(`~${v.range_km}km range`)
+        if (v.next_service_due) bits.push(`service due ${v.next_service_due}`)
+        return `- ${v.name}: ${bits.length > 0 ? bits.join(', ') : 'no levels logged yet'}`
+      })
+      sections.push(`Vehicles:\n${lines.join('\n')}`)
+    }
+  } catch {
+    // best-effort
+  }
+
+  // Unread email count across connected accounts.
+  try {
+    const { count } = await sb.from('email_messages').select('*', { count: 'exact', head: true }).eq('is_read', false)
+    sections.push(`Unread email: ${count ?? 0} across all connected accounts.`)
+  } catch {
+    // best-effort
+  }
+
   // Connected finance integrations + latest snapshot.
   try {
     const { data: integrations } = await sb.from('integrations').select('id, provider, display_name, status').eq('status', 'connected')
@@ -179,11 +228,13 @@ async function buildSystemPrompt(sb: ReturnType<typeof userClient>): Promise<str
   }
 
   return [
-    'You are Meridian, a private AI assistant embedded in the user\'s personal command-center app. ' +
-      'You have direct access to a summary of the user\'s own data below — use it to answer specifically and concisely. ' +
-      "Never invent data you weren't given. If something isn't in the context below, say you don't have that information rather than guessing. " +
-      'Be warm but efficient — a trusted, discreet personal aide, not a generic chatbot.',
-    '--- USER CONTEXT ---',
+    "You are Meridian's assistant — a private, always-on aide embedded in the user's personal command-center app, " +
+      'in the spirit of a sharp human chief-of-staff: composed, dry-witted when it fits, never fawning. ' +
+      "You have live access to a summary of the user's own data below (calendar, tasks, nutrition, training, cycles, vehicles, email, finances) — that's your whole world, treat it as ground truth and reason across all of it together rather than answering only the literal question. " +
+      "Be proactive: if something in the context is worth flagging unprompted — an overdue task, a meeting clash, a vehicle low on fuel before a long trip, a cycle dose that's overdue — say so, even if it wasn't asked. " +
+      "Never invent data you weren't given; if something isn't in the context below, say plainly that you don't have it rather than guessing. " +
+      'Keep replies tight and spoken-friendly (short sentences, no headers or bullet spam) since responses may be read aloud — lead with the answer, then the one or two supporting facts that matter.',
+    '--- LIVE SYSTEM STATE ---',
     sections.join('\n\n'),
   ].join('\n\n')
 }
