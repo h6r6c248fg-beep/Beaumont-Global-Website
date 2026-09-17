@@ -128,6 +128,62 @@ Any static host works for the frontend (Vercel, Netlify, Cloudflare Pages —
 same `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`. The Edge Functions live
 on Supabase itself via `supabase functions deploy`, nothing else to host.
 
+## 6. iOS app (TestFlight)
+
+The `ios/` folder is a [Capacitor](https://capacitorjs.com) wrapper around
+the same web app — a real native shell (app icon, launch screen, status bar
+theming) with the web build loaded inside. It uses Swift Package Manager,
+not CocoaPods, so there's no `pod install` step. You'll need a Mac with
+Xcode and an active Apple Developer Program membership.
+
+**Every time you want a new build** (first time, or after any code change):
+
+```bash
+cd app
+npm install
+npm run build
+npx cap sync ios
+npx cap open ios      # opens the project in Xcode
+```
+
+**In Xcode, one-time setup:**
+
+1. Select the **App** target → **Signing & Capabilities**.
+2. Check **Automatically manage signing** and pick your **Team**.
+3. The bundle identifier is `com.beaumontglobal.meridian` (set in
+   `capacitor.config.ts`'s `appId`) — change it there (then re-run
+   `npx cap sync ios`) if you'd rather use your own, and register whichever
+   ID you use as a new App ID / App Store Connect app first.
+
+**Archive and upload:**
+
+1. Top bar destination selector → **Any iOS Device (arm64)** (not a
+   simulator — Archive is greyed out on a simulator target).
+2. **Product → Archive**. When it finishes, the Organizer window opens.
+3. Select the archive → **Distribute App → App Store Connect → Upload** →
+   accept the defaults (automatic signing) → **Upload**.
+4. Apple takes a few minutes to process the build (you'll get an email).
+
+**Getting it onto your phone via TestFlight:**
+
+- **Internal testers** (you, or anyone already added as a user on your
+  App Store Connect team): App Store Connect → your app → **TestFlight**
+  tab → add the processed build to the **App Store Connect Users**
+  internal group. No review, available within minutes of processing.
+- **External testers** (anyone by email, or a public link): needs a short
+  Apple **Beta App Review** first (usually well under 48h for a first
+  build, faster after). Set this up under the **External Testing** group
+  in the same TestFlight tab.
+
+**One known limitation:** the Google/Microsoft calendar and email
+"Connect" buttons redirect out to the provider's consent screen and back —
+inside the native WebView that round trip needs proper URL-scheme/Universal
+Link handling to land back in the app, which isn't wired up yet. Apple
+Calendar (CalDAV) and iCloud Mail connect via a plain in-app form, so those
+aren't affected. Everything else (login, dashboard, calendar, nutrition,
+cycles, workouts, AI assistant, finance) works the same as the web app,
+since it's all just HTTPS calls to Supabase.
+
 ## Project structure
 
 ```

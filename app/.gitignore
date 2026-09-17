@@ -16,6 +16,18 @@ dist-ssr
 supabase/.temp
 supabase/.branches
 
+# iOS (Capacitor) — the native shell is committed, build output isn't.
+# Run `npm run build && npx cap sync ios` before opening Xcode to
+# regenerate ios/App/App/public from the latest web build.
+ios/App/App/public
+ios/App/Pods
+ios/App/output
+ios/DerivedData
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata
+ios/App/App.xcodeproj/xcuserdata
+xcuserdata/
+*.xcuserstate
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
