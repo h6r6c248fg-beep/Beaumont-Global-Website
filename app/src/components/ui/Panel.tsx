@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react'
 import { cx } from '@/lib/utils'
 
 export function Panel({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cx('glass-panel rounded-2xl', className)} {...props} />
+  return <div className={cx('glass-panel rounded-[22px]', className)} {...props} />
 }
 
 export function PanelHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
