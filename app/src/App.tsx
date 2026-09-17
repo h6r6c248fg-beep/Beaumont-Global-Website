@@ -1,6 +1,8 @@
-import { Suspense, lazy } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Suspense, lazy, useEffect } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { Compass } from 'lucide-react'
+import { App as CapacitorApp } from '@capacitor/app'
+import { Capacitor } from '@capacitor/core'
 import { AuthPage } from '@/features/auth/AuthPage'
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
 import { AppShell } from '@/components/layout/AppShell'
@@ -35,7 +37,27 @@ function Protected({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** Routes `meridianapp://tasks` (tapping the Home Screen widget) to /tasks. */
+function useWidgetDeepLinks() {
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return
+    const listener = CapacitorApp.addListener('appUrlOpen', ({ url }) => {
+      try {
+        const path = new URL(url).hostname || new URL(url).pathname.replace(/^\/+/, '')
+        if (path) navigate(`/${path}`)
+      } catch {
+        // malformed URL — ignore
+      }
+    })
+    return () => {
+      void listener.then((h) => h.remove())
+    }
+  }, [navigate])
+}
+
 export default function App() {
+  useWidgetDeepLinks()
   return (
     <Routes>
       <Route path="/auth" element={<AuthPage />} />

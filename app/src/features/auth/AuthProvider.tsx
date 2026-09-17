@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
+import { syncSessionToWidget } from '@/lib/widgetSync'
 import type { Profile } from '@/types/database'
 
 interface AuthContextValue {
@@ -30,12 +31,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session)
+      syncSessionToWidget(data.session)
       if (data.session?.user) loadProfile(data.session.user.id)
       setLoading(false)
     })
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession)
+      syncSessionToWidget(newSession)
       if (newSession?.user) {
         loadProfile(newSession.user.id)
       } else {

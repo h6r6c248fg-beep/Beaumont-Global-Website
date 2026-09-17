@@ -17,7 +17,37 @@
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 		FB0B016A067A705BC45170F6 /* SpeechPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA831E89626489A2834567B /* SpeechPlugin.swift */; };
+		35D609204DA6F76745BA8B52 /* SharedStorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FA14178D6F69AB9B992257 /* SharedStorePlugin.swift */; };
+		B20080000000000000000000 /* MeridianWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20010000000000000000000 /* MeridianWidgetsBundle.swift */; };
+		B20090000000000000000000 /* TaskWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20020000000000000000000 /* TaskWidget.swift */; };
+		B20100000000000000000000 /* ToggleTaskIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20030000000000000000000 /* ToggleTaskIntent.swift */; };
+		B20110000000000000000000 /* SharedTaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20040000000000000000000 /* SharedTaskStore.swift */; };
+		B20120000000000000000000 /* MeridianWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B20070000000000000000000 /* MeridianWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B20190000000000000000000 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B20180000000000000000000;
+			remoteInfo = MeridianWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B20170000000000000000000 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B20120000000000000000000 /* MeridianWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
@@ -32,6 +62,15 @@
 		9582B6822FE993A50072D4E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		DFA831E89626489A2834567B /* SpeechPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechPlugin.swift; sourceTree = "<group>"; };
+		70FA14178D6F69AB9B992257 /* SharedStorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStorePlugin.swift; sourceTree = "<group>"; };
+		A100000000000000000A0001 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		B20010000000000000000000 /* MeridianWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeridianWidgetsBundle.swift; sourceTree = "<group>"; };
+		B20020000000000000000000 /* TaskWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWidget.swift; sourceTree = "<group>"; };
+		B20030000000000000000000 /* ToggleTaskIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleTaskIntent.swift; sourceTree = "<group>"; };
+		B20040000000000000000000 /* SharedTaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTaskStore.swift; sourceTree = "<group>"; };
+		B20050000000000000000000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B20060000000000000000000 /* MeridianWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeridianWidgets.entitlements; sourceTree = "<group>"; };
+		B20070000000000000000000 /* MeridianWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MeridianWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +82,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B20150000000000000000000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -51,6 +97,7 @@
 			children = (
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				504EC3061FED79650016851F /* App */,
+				B20130000000000000000000 /* MeridianWidgets */,
 				504EC3051FED79650016851F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,8 +106,22 @@
 			isa = PBXGroup;
 			children = (
 				504EC3041FED79650016851F /* App.app */,
+				B20070000000000000000000 /* MeridianWidgets.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B20130000000000000000000 /* MeridianWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				B20010000000000000000000 /* MeridianWidgetsBundle.swift */,
+				B20020000000000000000000 /* TaskWidget.swift */,
+				B20030000000000000000000 /* ToggleTaskIntent.swift */,
+				B20040000000000000000000 /* SharedTaskStore.swift */,
+				B20050000000000000000000 /* Info.plist */,
+				B20060000000000000000000 /* MeridianWidgets.entitlements */,
+			);
+			path = MeridianWidgets;
 			sourceTree = "<group>";
 		};
 		504EC3061FED79650016851F /* App */ = {
@@ -70,6 +131,8 @@
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				DFA831E89626489A2834567B /* SpeechPlugin.swift */,
+				70FA14178D6F69AB9B992257 /* SharedStorePlugin.swift */,
+				A100000000000000000A0001 /* App.entitlements */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -90,10 +153,12 @@
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
+				B20170000000000000000000 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B20200000000000000000000 /* PBXTargetDependency */,
 			);
 			name = App;
 			packageProductDependencies = (
@@ -102,6 +167,23 @@
 			productName = App;
 			productReference = 504EC3041FED79650016851F /* App.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B20180000000000000000000 /* MeridianWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B20210000000000000000000 /* Build configuration list for PBXNativeTarget "MeridianWidgetsExtension" */;
+			buildPhases = (
+				B20140000000000000000000 /* Sources */,
+				B20150000000000000000000 /* Frameworks */,
+				B20160000000000000000000 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeridianWidgetsExtension;
+			productName = MeridianWidgetsExtension;
+			productReference = B20070000000000000000000 /* MeridianWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -116,6 +198,20 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					B20180000000000000000000 = {
+						CreatedOnToolsVersion = 16.0;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -136,6 +232,7 @@
 			projectRoot = "";
 			targets = (
 				504EC3031FED79650016851F /* App */,
+				B20180000000000000000000 /* MeridianWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -154,6 +251,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B20160000000000000000000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -164,10 +268,30 @@
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,
 				FB0B016A067A705BC45170F6 /* SpeechPlugin.swift in Sources */,
+				35D609204DA6F76745BA8B52 /* SharedStorePlugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B20140000000000000000000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20080000000000000000000 /* MeridianWidgetsBundle.swift in Sources */,
+				B20090000000000000000000 /* TaskWidget.swift in Sources */,
+				B20100000000000000000000 /* ToggleTaskIntent.swift in Sources */,
+				B20110000000000000000000 /* SharedTaskStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B20200000000000000000000 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B20180000000000000000000 /* MeridianWidgetsExtension */;
+			targetProxy = B20190000000000000000000 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		504EC30B1FED79650016851F /* Main.storyboard */ = {
@@ -303,6 +427,7 @@
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
@@ -325,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
@@ -337,6 +463,55 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beaumontglobal.meridian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B20220000000000000000000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MeridianWidgets/MeridianWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MeridianWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beaumontglobal.meridian.MeridianWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B20230000000000000000000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MeridianWidgets/MeridianWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MeridianWidgets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beaumontglobal.meridian.MeridianWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -359,6 +534,15 @@
 			buildConfigurations = (
 				504EC3171FED79650016851F /* Debug */,
 				504EC3181FED79650016851F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B20210000000000000000000 /* Build configuration list for PBXNativeTarget "MeridianWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B20220000000000000000000 /* Debug */,
+				B20230000000000000000000 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

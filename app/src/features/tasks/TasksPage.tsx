@@ -1,8 +1,9 @@
-import { useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ChevronRight, ListChecks, Plus, AlarmClockCheck, CalendarClock, CheckCircle2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/features/auth/AuthProvider'
+import { syncTasksToWidget } from '@/lib/widgetSync'
 import { Panel, PanelHeader, PanelTitle, PanelBody } from '@/components/ui/Panel'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -42,6 +43,13 @@ export function TasksPage() {
       return (data ?? []) as Task[]
     },
   })
+
+  // Keep the iOS Home Screen widget's snapshot current whenever the
+  // task list loads or changes (react-query re-runs this on every
+  // invalidate, e.g. after add/edit/toggle/delete).
+  useEffect(() => {
+    if (tasksQuery.data) syncTasksToWidget(tasksQuery.data)
+  }, [tasksQuery.data])
 
   const tasks = tasksQuery.data ?? []
 

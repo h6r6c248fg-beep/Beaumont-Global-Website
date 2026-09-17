@@ -184,6 +184,53 @@ aren't affected. Everything else (login, dashboard, calendar, nutrition,
 cycles, workouts, AI assistant, finance) works the same as the web app,
 since it's all just HTTPS calls to Supabase.
 
+### Voice assistant
+
+The mic button in Assistant calls a first-party native plugin
+(`ios/App/App/SpeechPlugin.swift`) that wraps Apple's on-device Speech
+framework directly — no third-party dependency, so nothing extra to
+install. It needs Xcode's Signing & Capabilities to actually prompt for
+microphone/speech permission on first use; if it doesn't, check that
+`NSMicrophoneUsageDescription` / `NSSpeechRecognitionUsageDescription`
+are still present in `Info.plist` (they should already be, this is just
+a note in case something gets reset).
+
+### Home Screen widget
+
+There's a second target in the Xcode project, **MeridianWidgets** — a
+WidgetKit extension showing today's tasks with a tap-to-complete checkbox,
+built without ever running Xcode (this repo's whole iOS setup was, so this
+part in particular is worth a sanity check the first time you open it):
+
+- It shares data with the main app via an **App Group**
+  (`group.com.beaumontglobal.meridian`) — the app writes a snapshot of
+  today's/overdue tasks plus your Supabase URL, anon key and current
+  session token into that shared storage (`SharedStorePlugin.swift`)
+  whenever your tasks change; the widget reads it with no network call of
+  its own (`MeridianWidgets/SharedTaskStore.swift`), and ticking a task in
+  the widget (`ToggleTaskIntent.swift`, iOS 17+ interactive widgets) both
+  updates that shared copy immediately and PATCHes Supabase directly to
+  persist it.
+- **If Xcode complains about signing** the first time you build ("App
+  Groups capability" or similar): open the **App** target's Signing &
+  Capabilities tab, and separately the **MeridianWidgets** target's — both
+  need **App Groups** checked with `group.com.beaumontglobal.meridian`
+  selected. The entitlements files already declare this; Xcode's
+  automatic-signing UI just sometimes wants you to confirm it once per
+  target the first time.
+- Tapping the widget body (outside the checkbox) opens the app to Tasks
+  via a `meridianapp://tasks` URL scheme, already registered in
+  `Info.plist` and handled in `src/App.tsx`.
+- **Simplification worth knowing about:** the Supabase session token used
+  by the widget's tap-to-complete lives in the same App Group
+  `UserDefaults` suite as the task snapshot — fine for this scope, but a
+  production app should move that specifically into a shared **Keychain
+  access group** instead, which is better protected at rest.
+- Add a second widget for a feature covered elsewhere (calendar, cars,
+  etc.) the same way: another `Widget` conforming struct added to
+  `MeridianWidgetsBundle`'s `body`, reading from its own key in the same
+  shared store.
+
 ## Project structure
 
 ```

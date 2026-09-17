@@ -30,6 +30,15 @@
 	<string>Meridian converts your voice to text on-device to send to your assistant.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Meridian uses your location to show today's weather in your morning briefing.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>meridianapp</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
