@@ -101,7 +101,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/10">
               <Compass className="h-4.5 w-4.5 text-[var(--color-gold-bright)]" strokeWidth={1.5} />
             </div>
-            <span className="font-display text-lg font-medium text-[var(--color-paper)]">Meridian</span>
+            <span className="font-display text-lg font-medium text-[var(--color-paper)]">Beaumont One</span>
           </div>
           <button className="rounded-lg p-1.5 text-[var(--color-mist)] hover:bg-white/5 lg:hidden" onClick={onNavigate}>
             <X className="h-4 w-4" />

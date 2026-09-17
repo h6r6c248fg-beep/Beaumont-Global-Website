@@ -285,7 +285,7 @@ export function AssistantPage() {
         <div className="flex items-center gap-2 border-b border-[var(--color-line-soft)] px-5 py-4">
           <Sparkles className="h-4 w-4 text-[var(--color-gold)]" />
           <h1 className="flex-1 font-display text-base font-medium text-[var(--color-paper)]">
-            {selectedId ? (conversations.data ?? []).find((c) => c.id === selectedId)?.title || 'Conversation' : 'Ask Meridian'}
+            {selectedId ? (conversations.data ?? []).find((c) => c.id === selectedId)?.title || 'Conversation' : 'Ask Beaumont One'}
           </h1>
           <button
             onClick={() => setSpeakReplies((v) => !v)}

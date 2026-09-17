@@ -230,7 +230,7 @@ export function DashboardPage() {
 
         <Panel>
           <PanelHeader>
-            <PanelTitle>Ask Meridian</PanelTitle>
+            <PanelTitle>Ask Beaumont One</PanelTitle>
             <Sparkles className="h-4 w-4 text-[var(--color-gold)]" />
           </PanelHeader>
           <PanelBody className="flex flex-col gap-3">

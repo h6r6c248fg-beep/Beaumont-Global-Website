@@ -268,7 +268,7 @@ export function DailyBriefing({ onClose }: { onClose: () => void }) {
           )}
 
           <Button variant="primary" size="lg" className="w-full justify-center" onClick={onClose}>
-            Continue to Meridian
+            Continue to Beaumont One
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>

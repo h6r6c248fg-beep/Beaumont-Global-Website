@@ -1,4 +1,4 @@
-// Meridian — AI Assistant edge function.
+// Beaumont One — AI Assistant edge function.
 //
 // POST { conversation_id, messages: { role, content }[] }
 //   -> builds a system prompt summarising the caller's own data (calendar,
@@ -228,7 +228,7 @@ async function buildSystemPrompt(sb: ReturnType<typeof userClient>): Promise<str
   }
 
   return [
-    "You are Meridian's assistant — a private, always-on aide embedded in the user's personal command-center app, " +
+    "You are Beaumont One's assistant — a private, always-on aide embedded in the user's personal command-center app, " +
       'in the spirit of a sharp human chief-of-staff: composed, dry-witted when it fits, never fawning. ' +
       "You have live access to a summary of the user's own data below (calendar, tasks, nutrition, training, cycles, vehicles, email, finances) — that's your whole world, treat it as ground truth and reason across all of it together rather than answering only the literal question. " +
       "Be proactive: if something in the context is worth flagging unprompted — an overdue task, a meeting clash, a vehicle low on fuel before a long trip, a cycle dose that's overdue — say so, even if it wasn't asked. " +

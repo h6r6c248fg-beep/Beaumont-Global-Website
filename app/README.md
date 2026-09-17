@@ -1,4 +1,4 @@
-# Meridian
+# Beaumont One
 
 Your private command center — calendar, inbox, AI assistant, steroid/peptide
 cycle tracking, nutrition, training and your own apps (OrgView, TraderPro),
@@ -106,7 +106,7 @@ so these connect directly from the app using an **app-specific password**:
 
 1. Go to [appleid.apple.com](https://appleid.apple.com) → Sign-In and
    Security → App-Specific Passwords → generate one.
-2. In Meridian, use your iCloud email + that app-specific password when
+2. In Beaumont One, use your iCloud email + that app-specific password when
    connecting Apple Calendar or iCloud Mail. Never use your real Apple ID
    password here.
 

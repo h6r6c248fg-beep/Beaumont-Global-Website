@@ -55,7 +55,7 @@ export function AuthPage() {
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/10">
             <Compass className="h-6 w-6 text-[var(--color-gold-bright)]" strokeWidth={1.5} />
           </div>
-          <h1 className="font-display text-3xl font-medium text-[var(--color-paper)]">Meridian</h1>
+          <h1 className="font-display text-3xl font-medium text-[var(--color-paper)]">Beaumont One</h1>
           <p className="mt-1.5 text-sm text-[var(--color-mist)]">The private command center for your work and your life.</p>
         </div>
 

@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
   appId: 'com.beaumontglobal.meridian',
-  appName: 'Meridian',
+  appName: 'Beaumont One',
   webDir: 'dist',
   backgroundColor: '#08090c',
   ios: {

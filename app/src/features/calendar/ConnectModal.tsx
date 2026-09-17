@@ -100,7 +100,7 @@ export function ConnectModal({ open, onClose }: { open: boolean; onClose: () => 
       <div className="space-y-4">
         <OptionCard icon={<Globe className="h-4 w-4" />} title="Google Calendar">
           <p className="mb-3 text-sm text-[var(--color-mist)]">
-            Sign in with Google and grant read access to your calendar. Meridian imports your upcoming events and keeps a
+            Sign in with Google and grant read access to your calendar. Beaumont One imports your upcoming events and keeps a
             copy in sync.
           </p>
           <Button
@@ -122,7 +122,7 @@ export function ConnectModal({ open, onClose }: { open: boolean; onClose: () => 
 
         <OptionCard icon={<Building2 className="h-4 w-4" />} title="Microsoft Outlook Calendar">
           <p className="mb-3 text-sm text-[var(--color-mist)]">
-            Sign in with Microsoft and grant read access to your Outlook calendar. Meridian imports your upcoming events
+            Sign in with Microsoft and grant read access to your Outlook calendar. Beaumont One imports your upcoming events
             and keeps a copy in sync.
           </p>
           <Button

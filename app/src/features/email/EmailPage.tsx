@@ -527,7 +527,7 @@ export function EmailPage() {
             <div className="flex items-start gap-2 rounded-lg border border-[var(--color-line)] bg-[var(--color-obsidian-2)] p-3 text-xs text-[var(--color-mist)]">
               <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               <span>
-                Meridian syncs message metadata only (subject, sender, date and a short snippet) — not the full body.
+                Beaumont One syncs message metadata only (subject, sender, date and a short snippet) — not the full body.
                 Open the message in Gmail, Outlook or your mail app for the complete content.
               </span>
             </div>
@@ -551,7 +551,7 @@ export function EmailPage() {
         {connectTab === 'gmail' && (
           <div className="space-y-4">
             <p className="text-sm text-[var(--color-mist)]">
-              Sign in with Google to sync your Gmail inbox read-only. Meridian requests only the
+              Sign in with Google to sync your Gmail inbox read-only. Beaumont One requests only the
               <code className="mx-1 rounded bg-white/5 px-1 py-0.5 text-xs">gmail.readonly</code>
               scope.
             </p>

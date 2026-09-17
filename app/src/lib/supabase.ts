@@ -14,7 +14,7 @@ export const isSupabaseConfigured = Boolean(url && anonKey)
 if (!isSupabaseConfigured) {
   // eslint-disable-next-line no-console
   console.warn(
-    '[Meridian] Supabase is not configured. Copy .env.example to .env.local and add your project URL + anon key.'
+    '[Beaumont One] Supabase is not configured. Copy .env.example to .env.local and add your project URL + anon key.'
   )
 }
 

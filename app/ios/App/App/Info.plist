@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Meridian</string>
+        <string>Beaumont One</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -25,11 +25,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Meridian uses the microphone so you can talk to your assistant.</string>
+	<string>Beaumont One uses the microphone so you can talk to your assistant.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Meridian converts your voice to text on-device to send to your assistant.</string>
+	<string>Beaumont One converts your voice to text on-device to send to your assistant.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Meridian uses your location to show today's weather in your morning briefing.</string>
+	<string>Beaumont One uses your location to show today's weather in your morning briefing.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
