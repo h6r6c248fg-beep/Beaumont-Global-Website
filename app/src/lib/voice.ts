@@ -13,7 +13,7 @@ import { registerPlugin, Capacitor } from '@capacitor/core'
 // assistant to talk back.
 
 interface MeridianSpeechPlugin {
-  requestPermissions(): Promise<{ granted: boolean }>
+  requestSpeechPermissions(): Promise<{ granted: boolean }>
   start(): Promise<void>
   stop(): Promise<void>
   addListener(
@@ -35,7 +35,7 @@ export function voiceInputSupport(): VoiceInputSupport {
 
 export async function requestVoiceInputPermission(): Promise<boolean> {
   if (Capacitor.isNativePlatform()) {
-    const { granted } = await NativeSpeech.requestPermissions()
+    const { granted } = await NativeSpeech.requestSpeechPermissions()
     return granted
   }
   return voiceInputSupport() === 'web'

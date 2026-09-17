@@ -14,7 +14,7 @@ public class MeridianSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "MeridianSpeechPlugin"
     public let jsName = "MeridianSpeech"
     public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "requestPermissions", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "requestSpeechPermissions", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "start", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "stop", returnType: CAPPluginReturnPromise),
     ]
@@ -24,7 +24,12 @@ public class MeridianSpeechPlugin: CAPPlugin, CAPBridgedPlugin {
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
 
-    @objc func requestPermissions(_ call: CAPPluginCall) {
+    // Named requestSpeechPermissions rather than requestPermissions: the
+    // latter collides with a method CAPPlugin's own base class already
+    // declares (Capacitor's declarative permissions API), which needs
+    // `override` and public visibility to redeclare — simplest to just
+    // not collide with it since we don't use that system here.
+    @objc func requestSpeechPermissions(_ call: CAPPluginCall) {
         SFSpeechRecognizer.requestAuthorization { speechStatus in
             AVAudioSession.sharedInstance().requestRecordPermission { micGranted in
                 DispatchQueue.main.async {
