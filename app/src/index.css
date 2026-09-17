@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  /* System font stack — on iOS/macOS this resolves to San Francisco, so
+     headings and body text read as genuinely native rather than a web
+     font standing in for one. */
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "IBM Plex Mono", monospace;
+
+  --color-ink: #08090c;
+  --color-obsidian: #0d0f14;
+  --color-obsidian-2: #121520;
+  --color-obsidian-3: #171b28;
+  --color-panel: #14171f;
+  --color-panel-2: #191d27;
+  --color-line: #262b3a;
+  --color-line-soft: #1c2029;
+
+  --color-mist: #9aa1b4;
+  --color-mist-2: #6c7284;
+  --color-paper: #f1efe9;
+  --color-paper-dim: #cfcdc6;
+
+  --color-gold: #cba15c;
+  --color-gold-bright: #e4bf7f;
+  --color-gold-dim: #8a734a;
+  --color-bronze: #b0794f;
+
+  --color-emerald: #59b895;
+  --color-rose: #d97a7a;
+  --color-azure: #6fa4d9;
+  --color-amber: #d9a55b;
+
+  --shadow-luxe: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 60px -20px rgba(0,0,0,0.7);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgba(203, 161, 92, 0.28);
+    color: var(--color-paper);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 999px;
+    border: 2px solid var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold-dim);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    /* iOS-style "vibrancy" material: heavier blur + saturation lift, a
+       hairline top highlight, softer border than a flat luxury card. */
+    background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012));
+    backdrop-filter: blur(28px) saturate(1.5);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: var(--shadow-luxe);
+  }
+
+  .gold-text {
+    background: linear-gradient(120deg, var(--color-gold-bright), var(--color-gold) 45%, var(--color-bronze));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    background: linear-gradient(90deg, transparent, var(--color-line) 20%, var(--color-line) 80%, transparent);
+    height: 1px;
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes splash-logo-in {
+  0% { opacity: 0; transform: scale(0.55); }
+  55% { opacity: 1; transform: scale(1.08); }
+  75% { transform: scale(0.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-splash-logo-in {
+  animation: splash-logo-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes splash-word-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-splash-word-in {
+  opacity: 0;
+  animation: splash-word-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+@keyframes splash-exit {
+  from { opacity: 1; transform: scale(1); filter: blur(0px); }
+  to { opacity: 0; transform: scale(1.06); filter: blur(6px); }
+}
+.animate-splash-exit {
+  animation: splash-exit 0.6s cubic-bezier(0.4, 0, 1, 1) forwards;
+}

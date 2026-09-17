@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Supabase CLI local link/cache state (project-specific, not shared)
+supabase/.temp
+supabase/.branches
+
+# iOS (Capacitor) — the native shell is committed, build output isn't.
+# Run `npm run build && npx cap sync ios` before opening Xcode to
+# regenerate ios/App/App/public from the latest web build.
+ios/App/App/public
+ios/App/Pods
+ios/App/output
+ios/DerivedData
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata
+ios/App/App.xcodeproj/xcuserdata
+xcuserdata/
+*.xcuserstate
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
