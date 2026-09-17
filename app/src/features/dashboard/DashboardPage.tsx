@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { format, isToday } from 'date-fns'
+import { DailyBriefing, shouldShowBriefingToday } from '@/features/briefing/DailyBriefing'
 import {
   CalendarDays,
   Mail,
@@ -24,6 +26,7 @@ import { formatNumber, round } from '@/lib/utils'
 export function DashboardPage() {
   const { user, profile } = useAuth()
   const userId = user?.id
+  const [showBriefing, setShowBriefing] = useState(shouldShowBriefingToday)
 
   const greetName = profile?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || ''
   const hour = new Date().getHours()
@@ -129,15 +132,22 @@ export function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">
-      <div className="animate-fade-up">
-        <p className="text-sm text-[var(--color-mist)]">{format(new Date(), 'EEEE, d MMMM yyyy')}</p>
-        <h1 className="mt-1 font-display text-3xl font-medium text-[var(--color-paper)]">
-          {greeting}
-          {greetName ? `, ${greetName}` : ''}.
-        </h1>
-        <p className="mt-2 max-w-2xl text-[var(--color-mist)]">
-          Everything that matters — calendar, inbox, training, nutrition, cycles and capital — in one private view.
-        </p>
+      {showBriefing && <DailyBriefing onClose={() => setShowBriefing(false)} />}
+
+      <div className="animate-fade-up flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p className="text-sm text-[var(--color-mist)]">{format(new Date(), 'EEEE, d MMMM yyyy')}</p>
+          <h1 className="mt-1 font-display text-3xl font-medium text-[var(--color-paper)]">
+            {greeting}
+            {greetName ? `, ${greetName}` : ''}.
+          </h1>
+          <p className="mt-2 max-w-2xl text-[var(--color-mist)]">
+            Everything that matters — calendar, inbox, training, nutrition, cycles and capital — in one private view.
+          </p>
+        </div>
+        <Button variant="secondary" size="sm" onClick={() => setShowBriefing(true)}>
+          Today's briefing
+        </Button>
       </div>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
